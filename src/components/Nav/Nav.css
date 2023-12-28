@@ -1,0 +1,7 @@
+.con {
+  display: flex;
+  align-items: center;
+}
+.wid {
+  width: 10%;
+}

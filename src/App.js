@@ -1,11 +1,11 @@
 import "./App.css";
+import Nav from "./components/Nav/Nav";
 import Products from "./components/Products/Products";
-import Header from "./components/Layout/Header/Header";
 
 function App() {
   return (
     <>
-      <Header />
+      <Nav />
       <Products />
     </>
   );

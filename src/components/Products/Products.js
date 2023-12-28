@@ -1,113 +1,40 @@
 import React from "react";
+import CardListItem from "./CardListItem/CardListItem";
 import "./Products.css";
-import CardItem from "./CardItem/CardItem";
-
-const items = [
-  {
-    discountedPrice: 340,
-    price: 450,
-    title: "Title of the item1",
-    thumbnail: "placeholder.png",
-  },
-  {
-    discountedPrice: 450,
-    price: 600,
-    title: "Title of the item2",
-    thumbnail: "placeholder.png",
-  },
-  {
-    discountedPrice: 340,
-    price: 450,
-    title: "Title of the item1",
-    thumbnail: "placeholder.png",
-  },
-  {
-    discountedPrice: 450,
-    price: 600,
-    title: "Title of the item2",
-    thumbnail: "placeholder.png",
-  },
-  {
-    discountedPrice: 340,
-    price: 450,
-    title: "Title of the item1",
-    thumbnail: "placeholder.png",
-  },
-  {
-    discountedPrice: 450,
-    price: 600,
-    title: "Title of the item2",
-    thumbnail: "placeholder.png",
-  },
-  {
-    discountedPrice: 340,
-    price: 450,
-    title: "Title of the item1",
-    thumbnail: "placeholder.png",
-  },
-  {
-    discountedPrice: 450,
-    price: 600,
-    title: "Title of the item2",
-    thumbnail: "placeholder.png",
-  },
-  {
-    discountedPrice: 340,
-    price: 450,
-    title: "Title of the item1",
-    thumbnail: "placeholder.png",
-  },
-  {
-    discountedPrice: 450,
-    price: 600,
-    title: "Title of the item2",
-    thumbnail: "placeholder.png",
-  },
-  {
-    discountedPrice: 340,
-    price: 450,
-    title: "Title of the item1",
-    thumbnail: "placeholder.png",
-  },
-  {
-    discountedPrice: 450,
-    price: 600,
-    title: "Title of the item2",
-    thumbnail: "placeholder.png",
-  },
-  {
-    discountedPrice: 340,
-    price: 450,
-    title: "Title of the item1",
-    thumbnail: "placeholder.png",
-  },
-  {
-    discountedPrice: 450,
-    price: 600,
-    title: "Title of the item2",
-    thumbnail: "placeholder.png",
-  },
-  {
-    discountedPrice: 340,
-    price: 450,
-    title: "Title of the item1",
-    thumbnail: "placeholder.png",
-  },
-  {
-    discountedPrice: 450,
-    price: 600,
-    title: "Title of the item2",
-    thumbnail: "placeholder.png",
-  },
-];
-
+import { useState, useEffect } from "react";
+import axios from "axios";
+import Loader from "../Loader/Loader";
 const Products = () => {
-  return (
-    <div className="productList">
-      {items.map((item, index) => {
-        return <CardItem data={item} />;
+  const [items, setItems] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    async function getItems() {
+      try {
+        const res = await axios.get(
+          "https://l-kart-feba7-default-rtdb.firebaseio.com/items.json"
+        );
+        const data = res.data;
+        const transformedData = data.map((item, index) => {
+          return { ...item, id: index };
+        });
+        setItems(transformedData);
+        setIsLoaded(true);
+        console.log(transformedData);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getItems();
+  }, []);
+  return isLoaded ? (
+    <div className="list">
+      {items.map((item) => {
+        return <CardListItem item={item} key={item.id} />;
       })}
     </div>
+  ) : (
+    <Loader />
   );
 };
 
