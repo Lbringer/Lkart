@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Form from "react-bootstrap/Form";
@@ -6,10 +6,14 @@ import Button from "react-bootstrap/Button";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import InputGroup from "react-bootstrap/InputGroup";
 import search from "../../assets/search.svg";
-
+import Cart from "../Cart/Cart";
 import "./Nav.css";
 
-const Nav = () => {
+const Nav = ({ numCartItems, cartItems, handleEventInfo }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const handleClick = () => {
+    setIsOpen((prev) => !prev);
+  };
   return (
     <>
       <Navbar className="bg-dark text-white" fixed="top">
@@ -41,9 +45,13 @@ const Nav = () => {
               <img src={search} alt="search" />
             </Button>
           </InputGroup>
-          <Button className="btn btn-warning wid fw-medium">
-            Cart <sup>0</sup>
-          </Button>
+          <Cart
+            isOpen={isOpen}
+            handleClick={handleClick}
+            numCartItems={numCartItems}
+            cartItems={cartItems}
+            handleEventInfo={handleEventInfo}
+          />
         </Container>
       </Navbar>
     </>

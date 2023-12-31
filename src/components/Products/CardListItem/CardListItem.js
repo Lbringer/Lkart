@@ -5,20 +5,16 @@ import { useState } from "react";
 import ModalComp from "../../Modal_Comp/Modal_Comp";
 import Modal from "react-bootstrap/Modal";
 
-const CardListItem = ({ item }) => {
-  const [counter, setCounter] = useState(0);
+const CardListItem = ({ item, handleAdd, handleRemove }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleMinus = (e) => {
     e.stopPropagation();
-    if (counter <= 0) {
-      return;
-    }
-    setCounter(counter - 1);
+    handleRemove(item.id);
   };
   const handlePlus = (e) => {
     e.stopPropagation();
-    setCounter(counter + 1);
+    handleAdd(item.id);
   };
 
   const handleClick = () => {
@@ -36,7 +32,7 @@ const CardListItem = ({ item }) => {
             <strike className="fw-medium ms-2">₹ {item.price}</strike>
           </Card.Text>
 
-          {counter < 1 ? (
+          {item.quantity < 1 ? (
             <Button
               variant="warning"
               className="w-100 fw-medium"
@@ -49,7 +45,7 @@ const CardListItem = ({ item }) => {
               <Button variant="warning" onClick={handleMinus}>
                 -
               </Button>
-              <span className="fw-medium">{counter}</span>
+              <span className="fw-medium">{item.quantity}</span>
               <Button variant="warning" onClick={handlePlus}>
                 +
               </Button>
@@ -63,11 +59,11 @@ const CardListItem = ({ item }) => {
         </Modal.Header>
         <Modal.Body>{item.description}</Modal.Body>
         <Modal.Footer className=" d-flex justify-content-between">
-          {counter < 1 ? (
+          {item.quantity < 1 ? (
             <Button
               variant="warning"
               className="w-100 fw-medium"
-              onClick={() => setCounter(counter + 1)}
+              onClick={handlePlus}
             >
               Add to Cart
             </Button>
@@ -76,8 +72,8 @@ const CardListItem = ({ item }) => {
               <Button variant="warning" onClick={handleMinus}>
                 -
               </Button>
-              <span className="fw-medium">{counter}</span>
-              <Button variant="warning" onClick={() => setCounter(counter + 1)}>
+              <span className="fw-medium">{item.quantity}</span>
+              <Button variant="warning" onClick={handlePlus}>
                 +
               </Button>
             </>
