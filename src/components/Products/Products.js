@@ -4,6 +4,7 @@ import "./Products.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Loader from "../Loader/Loader";
+import Container from "react-bootstrap/esm/Container";
 const Products = () => {
   const [items, setItems] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -28,11 +29,11 @@ const Products = () => {
     getItems();
   }, []);
   return isLoaded ? (
-    <div className="list">
+    <Container className="list">
       {items.map((item) => {
         return <CardListItem item={item} key={item.id} />;
       })}
-    </div>
+    </Container>
   ) : (
     <Loader />
   );
