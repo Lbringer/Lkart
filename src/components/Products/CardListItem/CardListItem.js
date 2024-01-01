@@ -4,17 +4,25 @@ import Card from "react-bootstrap/Card";
 import { useState } from "react";
 import ModalComp from "../../Modal_Comp/Modal_Comp";
 import Modal from "react-bootstrap/Modal";
-
-const CardListItem = ({ item, handleAdd, handleRemove }) => {
+import { useDispatch, useSelector } from "react-redux";
+import { ADD_ITEM, REMOVE_ITEM } from "../../../redux/Cart/CartSlice";
+const CardListItem = ({ item }) => {
   const [isOpen, setIsOpen] = useState(false);
+  //item from cart
+  const cartItem = useSelector((state) => {
+    return state.cart.items.find((it) => it.id === item.id);
+  });
+  const dispatch = useDispatch();
 
   const handleMinus = (e) => {
     e.stopPropagation();
-    handleRemove(item.id);
+    // handleRemove(item.id);
+    dispatch(REMOVE_ITEM(item.id));
   };
   const handlePlus = (e) => {
     e.stopPropagation();
-    handleAdd(item.id);
+    // handleAdd(item.id);
+    dispatch(ADD_ITEM(item));
   };
 
   const handleClick = () => {
@@ -32,7 +40,7 @@ const CardListItem = ({ item, handleAdd, handleRemove }) => {
             <strike className="fw-medium ms-2">₹ {item.price}</strike>
           </Card.Text>
 
-          {item.quantity < 1 ? (
+          {!cartItem || cartItem?.quantity < 1 ? (
             <Button
               variant="warning"
               className="w-100 fw-medium"
@@ -45,7 +53,7 @@ const CardListItem = ({ item, handleAdd, handleRemove }) => {
               <Button variant="warning" onClick={handleMinus}>
                 -
               </Button>
-              <span className="fw-medium">{item.quantity}</span>
+              <span className="fw-medium">{cartItem.quantity}</span>
               <Button variant="warning" onClick={handlePlus}>
                 +
               </Button>
@@ -59,7 +67,7 @@ const CardListItem = ({ item, handleAdd, handleRemove }) => {
         </Modal.Header>
         <Modal.Body>{item.description}</Modal.Body>
         <Modal.Footer className=" d-flex justify-content-between">
-          {item.quantity < 1 ? (
+          {!cartItem || cartItem?.quantity < 1 ? (
             <Button
               variant="warning"
               className="w-100 fw-medium"
@@ -72,7 +80,7 @@ const CardListItem = ({ item, handleAdd, handleRemove }) => {
               <Button variant="warning" onClick={handleMinus}>
                 -
               </Button>
-              <span className="fw-medium">{item.quantity}</span>
+              <span className="fw-medium">{cartItem.quantity}</span>
               <Button variant="warning" onClick={handlePlus}>
                 +
               </Button>

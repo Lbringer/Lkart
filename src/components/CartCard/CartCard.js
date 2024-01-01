@@ -4,8 +4,11 @@ import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { useDispatch } from "react-redux";
+import { ADD_ITEM, REMOVE_ITEM } from "../../redux/Cart/CartSlice";
 
-const CartCard = ({ item, handleEventInfo }) => {
+const CartCard = ({ item }) => {
+  const dispatch = useDispatch();
   return (
     <>
       <Card style={{ width: "16rem" }} className="m-1 d-flex flex-row w-100">
@@ -25,14 +28,14 @@ const CartCard = ({ item, handleEventInfo }) => {
                 <Card.Text className="d-flex justify-content-between align-items-center">
                   <Button
                     variant="warning"
-                    onClick={() => handleEventInfo(item.id, -1)}
+                    onClick={() => dispatch(REMOVE_ITEM(item.id))}
                   >
                     -
                   </Button>
                   <span className="fw-medium">{item.quantity}</span>
                   <Button
                     variant="warning"
-                    onClick={() => handleEventInfo(item.id, 1)}
+                    onClick={() => dispatch(ADD_ITEM(item))}
                   >
                     +
                   </Button>

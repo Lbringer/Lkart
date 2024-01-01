@@ -9,7 +9,7 @@ import search from "../../assets/search.svg";
 import Cart from "../Cart/Cart";
 import "./Nav.css";
 
-const Nav = ({ numCartItems, cartItems, handleEventInfo }) => {
+const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const handleClick = () => {
     setIsOpen((prev) => !prev);
@@ -45,13 +45,7 @@ const Nav = ({ numCartItems, cartItems, handleEventInfo }) => {
               <img src={search} alt="search" />
             </Button>
           </InputGroup>
-          <Cart
-            isOpen={isOpen}
-            handleClick={handleClick}
-            numCartItems={numCartItems}
-            cartItems={cartItems}
-            handleEventInfo={handleEventInfo}
-          />
+          <Cart isOpen={isOpen} handleClick={handleClick} />
         </Container>
       </Navbar>
     </>
