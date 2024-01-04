@@ -44,7 +44,6 @@ export const cartSlice = createSlice({
       state.items = items;
     },
     CLEAR_CART: (state) => {
-      console.log("Here");
       state.items = [];
       state.totalAmt = 0;
     },

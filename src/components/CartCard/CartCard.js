@@ -11,7 +11,7 @@ const CartCard = ({ item }) => {
   const dispatch = useDispatch();
   return (
     <>
-      <Card style={{ width: "16rem" }} className="m-1 d-flex flex-row w-100">
+      <Card className="m-1 d-flex flex-row w-100">
         <Container>
           <Row>
             <Col>

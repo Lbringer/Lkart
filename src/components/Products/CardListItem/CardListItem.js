@@ -30,7 +30,11 @@ const CardListItem = ({ item }) => {
   };
   return (
     <>
-      <Card style={{ width: "16rem" }} className="m-1" onClick={handleClick}>
+      <Card
+        style={{ width: "16rem", height: "30rem" }}
+        className="m-1"
+        onClick={handleClick}
+      >
         <Card.Img variant="top" src={`/assets/${item.thumbnail}`} />
         <hr />
         <Card.Body className=" d-flex flex-column justify-content-between">
